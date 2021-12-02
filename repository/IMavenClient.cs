@@ -1,0 +1,11 @@
+using System.Collections.Generic;
+using System.Net.Http;
+
+namespace PokerSlackAvatar.Repository {
+    public interface IMavenClient<T>
+    {
+        T Post(HttpClient client, Dictionary<string,string> Parameters);
+    }
+
+}
+//A c# class to interface with Maeven Poker software 6.11
