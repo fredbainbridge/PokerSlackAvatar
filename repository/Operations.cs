@@ -27,10 +27,11 @@ namespace PokerSlackAvatar.Repository {
         }
         private SqlConnectionStringBuilder GetSqlConnectionStringBuilder() {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = _secrets.DBDataSource(); 
-            builder.UserID = _secrets.DBUserID();
-            builder.Password = _secrets.DBPassword();     
-            builder.InitialCatalog = _secrets.DBName();
+            //builder.DataSource = _secrets.DBDataSource();
+            builder.ConnectionString = "Server=localhost\\sqlexpress;Database=Poker;Trusted_Connection=True;MultipleActiveResultSets=true";
+            //builder.UserID = _secrets.DBUserID();
+            //builder.Password = _secrets.DBPassword();     
+            //builder.InitialCatalog = _secrets.DBName();
             return builder;
         }
         private void UpdateUserAvatarHash(string userID, string hash) {
@@ -67,9 +68,10 @@ namespace PokerSlackAvatar.Repository {
                             while (reader.Read())
                             {
                                 try {
+                                   
                                     PokerUser p = new PokerUser() {
                                     SlackID = reader.GetString(0),
-                                    AvatarHash = reader.GetString(1),
+                                    AvatarHash = reader.IsDBNull(1) ? "" : reader.GetString(1),
                                     UserName = reader.GetString(2) };
                                     slackIDs.Add(p);
                                 }
